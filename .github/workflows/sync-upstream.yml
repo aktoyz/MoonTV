@@ -1,14 +1,13 @@
 name: Sync Fork with Upstream
 
 on:
-  workflow_dispatch: # 允许手动触发
+  workflow_dispatch:
   schedule:
-    # 每天 UTC 时间 00:00 运行一次（根据你的需求调整，例如：'0 0 * * *' 表示每天午夜）
-    # 你可以根据需要调整 cron 表达式，例如：
-    # '0 0 * * *' - 每天 UTC 00:00
-    # '0 */6 * * *' - 每6小时
-    # '0 0 * * 1' - 每周一 UTC 00:00
-    - cron: '0 0 * * *' # 这里设置为每天同步一次
+    - cron: '0 0 * * *'
+
+permissions: # <-- 在这里添加这个新的块
+  contents: write # 允许写入代码内容，这是同步所必需的
+  workflows: write # 允许写入或修改 workflow 文件，解决当前的错误
 
 jobs:
   sync:
@@ -17,7 +16,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
         with:
-          fetch-depth: 0 # Fetch all history to ensure proper merge
+          fetch-depth: 0
 
       - name: Set up Git config
         run: |
@@ -32,8 +31,7 @@ jobs:
 
       - name: Merge upstream into main
         run: |
-          # 注意：你的主分支是 'main'，所以这里使用 'upstream/main'
-          git merge upstream/main --no-edit || exit 1 # 使用 --no-edit 避免需要提交信息，如果有冲突会失败
+          git merge upstream/main --no-edit || exit 1
 
       - name: Push changes
-        run: git push origin main # 推送到你的 'main' 分支
+        run: git push origin main
