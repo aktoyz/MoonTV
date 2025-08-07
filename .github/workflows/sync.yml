@@ -8,8 +8,6 @@ on:
 permissions:
   contents: write
   actions: write
-  workflows: write  # <-- 这一行，前面多了两个空格，使其与上面两行对齐
-
 
 jobs:
   sync_latest_from_upstream:
@@ -27,8 +25,7 @@ jobs:
         id: sync
         uses: aormsby/Fork-Sync-With-Upstream-action@v3.4.1
         with:
-          # **请确认此处是正确的上游仓库，例如 senshinya/MoonTV 或 LunaTechLab/MoonTV**
-          upstream_sync_repo: senshinya/MoonTV
+          upstream_sync_repo: LunaTechLab/MoonTV
           upstream_sync_branch: main
           target_sync_branch: main
           target_repo_token: ${{ secrets.GITHUB_TOKEN }}
