@@ -8,7 +8,8 @@ on:
 permissions:
   contents: write
   actions: write
-  workflows: write # <-- **新增了这一行**，解决了权限问题
+  workflows: write  # <-- 这一行，前面多了两个空格，使其与上面两行对齐
+
 
 jobs:
   sync_latest_from_upstream:
